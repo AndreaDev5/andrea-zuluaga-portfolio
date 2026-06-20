@@ -1,8 +1,8 @@
 # Andrea Zuluaga — Portafolio
 
-Portafolio profesional de **Andrea Zuluaga** — Data Analyst | Process Automation | FinOps.
+Portafolio personal 
 
-Diseño premium tipo SaaS (estilo Linear / Vercel / Raycast), dark mode por defecto con acentos morado/azul, light mode opcional.
+Diseño  tipo SaaS (estilo Linear / Vercel / Raycast), dark mode por defecto con acentos morado/azul, light mode opcional.
 
 ## Stack
 
@@ -46,18 +46,4 @@ public/             # favicon, robots.txt, og.jpg
 | Colores / tema           | `src/styles/global.css`       |
 | Foto de perfil           | `src/assets/andrea.jpg`       |
 
-## Deploy a GitHub Pages
 
-1. Crea el repo `andrea-zuluaga-portfolio` en la cuenta **AndreaDev5**.
-2. `git remote add origin https://github.com/AndreaDev5/andrea-zuluaga-portfolio.git`
-3. `git push -u origin main`
-4. En GitHub → **Settings → Pages → Source: GitHub Actions**.
-5. El workflow `.github/workflows/deploy.yml` publica automáticamente en cada push a `main`.
-
-Sitio final: **https://AndreaDev5.github.io/andrea-zuluaga-portfolio**
-
-## Formulario de contacto
-
-Funciona sin backend: abre el cliente de correo con el mensaje prellenado (`mailto:`).
-Para envío directo desde el sitio, cambia el formulario a [Formspree](https://formspree.io)
-(`action="https://formspree.io/f/XXXX"` `method="POST"`) en `src/components/Contact.astro`.
