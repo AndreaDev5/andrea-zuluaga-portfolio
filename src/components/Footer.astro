@@ -1,0 +1,40 @@
+---
+import { site } from '../data/site';
+import Icon from './Icon.astro';
+import Planet from './Planet.astro';
+
+const socials = [
+  { href: site.linkedin, icon: 'linkedin', label: 'LinkedIn' },
+  { href: site.github, icon: 'github', label: 'GitHub' },
+  { href: `mailto:${site.email}`, icon: 'mail', label: 'Email' },
+];
+---
+<footer class="border-t border-border py-8">
+  <div class="container-page flex flex-col items-center gap-6 text-center sm:grid sm:grid-cols-3 sm:gap-4 sm:text-left">
+    <!-- Izquierda: planeta + nombre -->
+    <div class="flex items-center gap-3 sm:justify-self-start">
+      <Planet class="text-ink" size={32} />
+      <p class="text-sm font-semibold text-ink">Andrea Zuluaga</p>
+    </div>
+
+    <!-- Centro: redes -->
+    <div class="flex items-center justify-center gap-2 sm:justify-self-center">
+      {socials.map((s) => (
+        <a
+          href={s.href}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="grid h-9 w-9 place-items-center rounded-lg border border-border bg-card text-muted transition-colors hover:text-ink"
+          aria-label={s.label}
+        >
+          <Icon name={s.icon} size={18} />
+        </a>
+      ))}
+    </div>
+
+    <!-- Derecha: copyright -->
+    <p class="text-xs text-muted sm:justify-self-end sm:text-right">
+      © {new Date().getFullYear()} Andrea Zuluaga
+    </p>
+  </div>
+</footer>

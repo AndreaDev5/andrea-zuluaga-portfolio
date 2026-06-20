@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://AndreaDev5.github.io/andrea-zuluaga-portfolio/sitemap.xml

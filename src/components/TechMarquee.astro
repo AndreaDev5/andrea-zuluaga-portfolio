@@ -1,0 +1,41 @@
+---
+import { Icon } from 'astro-icon/components';
+
+// Logos del stack (monocromáticos, heredan el color del texto).
+const logos = [
+  { name: 'MySQL', icon: 'simple-icons:mysql' },
+  { name: 'Visual Studio Code', icon: 'simple-icons:visualstudiocode' },
+  { name: 'Trello', icon: 'simple-icons:trello' },
+  { name: 'Notion', icon: 'simple-icons:notion' },
+  { name: 'Git', icon: 'simple-icons:git' },
+  { name: 'GitHub', icon: 'simple-icons:github' },
+  { name: 'Python', icon: 'simple-icons:python' },
+  { name: 'JavaScript', icon: 'simple-icons:javascript' },
+  { name: 'React', icon: 'simple-icons:react' },
+  { name: 'Claude', icon: 'simple-icons:claude' },
+  { name: 'IA', icon: 'lucide:bot' },
+];
+
+// Se duplica la lista para un loop continuo sin saltos.
+const loop = [...logos, ...logos];
+---
+<section aria-label="Tecnologías y herramientas" class="border-t border-border bg-surface py-12">
+  <p class="container-page mb-8 text-center text-xs font-medium uppercase tracking-[0.2em] text-muted">
+    Herramientas &amp; tecnologías
+  </p>
+
+  <div class="marquee group">
+    <div class="marquee-track">
+      {loop.map((logo, i) => (
+        <div class="marquee-item">
+          <span class="marquee-sep" aria-hidden="true"></span>
+          <Icon
+            name={logo.icon}
+            title={logo.name}
+            class="h-8 w-8 text-muted transition-colors duration-300 group-hover:text-muted hover:!text-ink sm:h-9 sm:w-9"
+          />
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
