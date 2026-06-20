@@ -1,0 +1,72 @@
+---
+import '@fontsource-variable/inter';
+import '../styles/global.css';
+import { site } from '../data/site';
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+const { title = `${site.name} — Data Analyst, Automation & FinOps`, description = site.description } = Astro.props;
+
+const base = import.meta.env.BASE_URL;
+const canonical = new URL(Astro.url.pathname, Astro.site ?? site.url).href;
+const ogImage = new URL(`${base}og.jpg`.replace(/\/+/g, '/'), Astro.site ?? site.url).href;
+---
+<!doctype html>
+<html lang="es" class="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" type="image/svg+xml" href={`${base}favicon.svg`} />
+    <meta name="generator" content={Astro.generator} />
+
+    <!-- Pre-paint: aplica el tema guardado antes de pintar (sin flash). Dark por default. -->
+    <script is:inline>
+      (function () {
+        const stored = localStorage.getItem('theme');
+        const theme = stored === 'light' ? 'light' : 'dark';
+        document.documentElement.classList.remove('light', 'dark');
+        document.documentElement.classList.add(theme);
+      })();
+    </script>
+
+    <!-- SEO -->
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta name="author" content={site.name} />
+    <meta name="keywords" content="Data Analyst, Process Automation, FinOps, Power BI, SQL, Python, AI Agents, KPI, Andrea Zuluaga" />
+    <link rel="canonical" href={canonical} />
+    <meta name="theme-color" content="#121519" />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="es_CO" />
+    <meta property="og:site_name" content={site.name} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogImage} />
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
+
+    <!-- JSON-LD: Persona -->
+    <script type="application/ld+json" set:html={JSON.stringify({
+      '@context': 'https://schema.org',
+      '@type': 'Person',
+      name: site.name,
+      jobTitle: 'Data Analyst | Process Automation | FinOps',
+      description: site.description,
+      url: site.url,
+      email: site.email,
+      sameAs: [site.linkedin, site.github],
+    })} />
+  </head>
+  <body>
+    <slot />
+  </body>
+</html>

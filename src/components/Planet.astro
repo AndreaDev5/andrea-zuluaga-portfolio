@@ -1,0 +1,30 @@
+---
+// Logo: planeta con arito (estilo Saturno). Usa currentColor → se adapta al tema.
+interface Props {
+  class?: string;
+  size?: number;
+}
+const { class: className = '', size = 28 } = Astro.props;
+---
+<svg
+  width={size}
+  height={size}
+  viewBox="0 0 40 40"
+  fill="none"
+  class={className}
+  aria-hidden="true"
+>
+  <!-- planeta -->
+  <circle cx="20" cy="20" r="9" fill="currentColor" />
+  <!-- arito -->
+  <ellipse
+    cx="20"
+    cy="20"
+    rx="17.5"
+    ry="6"
+    transform="rotate(-20 20 20)"
+    stroke="currentColor"
+    stroke-width="2.2"
+    stroke-linecap="round"
+  />
+</svg>
