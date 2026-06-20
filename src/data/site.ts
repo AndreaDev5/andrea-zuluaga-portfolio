@@ -5,7 +5,7 @@ export const site = {
   tagline:
     'Transformo datos operativos en decisiones estratégicas mediante automatización, análisis y optimización de procesos.',
   location: 'Colombia',
-  email: 'andrazuluagamonroy05@gmail.com',
+  email: 'andreazuluagamonroy05@gmail.com',
   linkedin: 'https://www.linkedin.com/in/andrea-zuluaga-monroy',
   github: 'https://github.com/AndreaDev5',
   // URL pública del sitio (GitHub Pages)
