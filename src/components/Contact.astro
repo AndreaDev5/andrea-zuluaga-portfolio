@@ -13,9 +13,9 @@ const channels = [
   <div class="container-page grid gap-12 lg:grid-cols-12">
     <div class="lg:col-span-5">
       <Reveal client:visible>
-        <span class="eyebrow mb-4">Contacto</span>
-        <h2 class="section-title">Hablemos</h2>
-        <p class="mt-4 max-w-md text-muted">
+        <span class="eyebrow mb-4" data-i18n="contact_eyebrow">Contacto</span>
+        <h2 class="section-title" data-i18n="contact_title">Hablemos</h2>
+        <p class="mt-4 max-w-md text-muted" data-i18n="contact_intro">
           ¿Tienes un proyecto de datos, automatización o IA en mente? Escríbeme y conversemos.
         </p>
 
@@ -44,36 +44,48 @@ const channels = [
 
     <div class="lg:col-span-7 lg:mt-12">
       <Reveal client:visible delay={0.1}>
-        <form id="contact-form" class="card-surface p-6 sm:p-8">
+        <form
+          id="contact-form"
+          action="https://formsubmit.co/ajax/andreazuluagamonroy05@gmail.com"
+          method="POST"
+          class="card-surface p-6 sm:p-8"
+        >
+          <!-- Config FormSubmit -->
+          <input type="hidden" name="_subject" value="Nuevo mensaje desde tu portafolio ✨" />
+          <input type="hidden" name="_captcha" value="false" />
+          <input type="hidden" name="_template" value="table" />
+          <!-- Honeypot anti-spam (invisible) -->
+          <input type="text" name="_honey" tabindex="-1" autocomplete="off" class="hidden" aria-hidden="true" />
+
           <div class="grid gap-5 sm:grid-cols-2">
             <div class="sm:col-span-1">
-              <label for="name" class="mb-2 block text-sm font-medium text-ink">Nombre</label>
+              <label for="name" class="mb-2 block text-sm font-medium text-ink" data-i18n="contact_label_name">Nombre</label>
               <input
                 id="name" name="name" type="text" required
                 class="w-full rounded-xl border border-border bg-bg px-4 py-3 text-sm text-ink placeholder:text-muted/70 focus:border-accent"
-                placeholder="Tu nombre"
+                placeholder="Tu nombre" data-i18n-ph="contact_ph_name"
               />
             </div>
             <div class="sm:col-span-1">
-              <label for="email" class="mb-2 block text-sm font-medium text-ink">Email</label>
+              <label for="email" class="mb-2 block text-sm font-medium text-ink" data-i18n="contact_label_email">Email</label>
               <input
                 id="email" name="email" type="email" required
                 class="w-full rounded-xl border border-border bg-bg px-4 py-3 text-sm text-ink placeholder:text-muted/70 focus:border-accent"
-                placeholder="tu@email.com"
+                placeholder="tu@email.com" data-i18n-ph="contact_ph_email"
               />
             </div>
           </div>
           <div class="mt-5">
-            <label for="message" class="mb-2 block text-sm font-medium text-ink">Mensaje</label>
+            <label for="message" class="mb-2 block text-sm font-medium text-ink" data-i18n="contact_label_message">Mensaje</label>
             <textarea
               id="message" name="message" rows="5" required
               class="w-full resize-y rounded-xl border border-border bg-bg px-4 py-3 text-sm text-ink placeholder:text-muted/70 focus:border-accent"
-              placeholder="Cuéntame sobre tu proyecto…"
+              placeholder="Cuéntame sobre tu proyecto…" data-i18n-ph="contact_ph_message"
             ></textarea>
           </div>
           <div class="mt-6 flex items-center justify-between gap-4">
             <button type="submit" class="btn-primary">
-              Enviar mensaje
+              <span data-i18n="contact_btn">Enviar mensaje</span>
               <Icon name="arrow-right" size={18} />
             </button>
             <p id="form-status" class="text-sm text-muted" aria-live="polite"></p>
@@ -84,20 +96,50 @@ const channels = [
   </div>
 </section>
 
-<script is:inline define:vars={{ email: site.email }}>
-  // Sin backend: abre el cliente de correo con el mensaje prellenado (mailto).
-  // Para envío directo, swap a Formspree: action="https://formspree.io/f/XXXX" method="POST".
+<script is:inline>
+  // Envío directo vía FormSubmit (AJAX): el mensaje llega al correo de Andrea
+  // sin que el visitante salga de la página. Muestra estado en pantalla.
   const form = document.getElementById('contact-form');
   const status = document.getElementById('form-status');
-  form?.addEventListener('submit', (e) => {
+  const MSG = {
+    es: {
+      sending: 'Enviando…',
+      sent: '¡Mensaje enviado! Gracias, te responderé pronto. ✅',
+      error: 'No se pudo enviar. Escríbeme directo a mi correo.',
+    },
+    en: {
+      sending: 'Sending…',
+      sent: "Message sent! Thanks, I'll get back to you soon. ✅",
+      error: 'Could not send. Please email me directly.',
+    },
+  };
+  form?.addEventListener('submit', async (e) => {
     e.preventDefault();
-    const data = new FormData(form);
-    const name = (data.get('name') || '').toString();
-    const from = (data.get('email') || '').toString();
-    const message = (data.get('message') || '').toString();
-    const subject = encodeURIComponent(`Contacto portafolio — ${name}`);
-    const body = encodeURIComponent(`${message}\n\n—\n${name} (${from})`);
-    status.textContent = 'Abriendo tu correo…';
-    window.location.href = `mailto:${email}?subject=${subject}&body=${body}`;
+    const m = MSG[document.documentElement.lang === 'en' ? 'en' : 'es'];
+    const btn = form.querySelector('button[type="submit"]');
+    status.textContent = m.sending;
+    status.className = 'text-sm text-muted';
+    if (btn) btn.disabled = true;
+    try {
+      const res = await fetch(form.action, {
+        method: 'POST',
+        headers: { Accept: 'application/json' },
+        body: new FormData(form),
+      });
+      const json = await res.json().catch(() => ({}));
+      if (res.ok && String(json.success) === 'true') {
+        status.textContent = m.sent;
+        status.className = 'text-sm text-accent';
+        form.reset();
+      } else {
+        status.textContent = json.message || m.error;
+        status.className = 'text-sm text-muted';
+      }
+    } catch (err) {
+      status.textContent = m.error;
+      status.className = 'text-sm text-muted';
+    } finally {
+      if (btn) btn.disabled = false;
+    }
   });
 </script>

@@ -3,18 +3,18 @@ import Reveal from './Reveal.tsx';
 import Icon from './Icon.astro';
 
 const highlights = [
-  'Organización',
-  'Comunicación efectiva',
-  'Trabajo en equipo',
-  'Aprendizaje continuo',
+  { key: 'about_h1', label: 'Organización' },
+  { key: 'about_h2', label: 'Comunicación efectiva' },
+  { key: 'about_h3', label: 'Trabajo en equipo' },
+  { key: 'about_h4', label: 'Aprendizaje continuo' },
 ];
 ---
 <section id="about" class="border-t border-border py-20 sm:py-28">
   <div class="container-page grid gap-12 lg:grid-cols-12">
     <div class="lg:col-span-5">
       <Reveal client:visible>
-        <span class="eyebrow mb-4">Sobre mí</span>
-        <h2 class="section-title">
+        <span class="eyebrow mb-4" data-i18n="about_eyebrow">Sobre mí</span>
+        <h2 class="section-title" data-i18n="about_title">
           Hecho es mejor que <span class="text-gradient">perfecto</span>
         </h2>
       </Reveal>
@@ -23,22 +23,24 @@ const highlights = [
     <div class="lg:col-span-7">
       <Reveal client:visible delay={0.1}>
         <div class="space-y-5 text-base leading-relaxed text-muted sm:text-lg">
-          <p>
+          <p data-i18n="about_p1">
             Soy <span class="font-medium text-ink">Analista y Desarrolladora de Software</span>.
             Durante mi trayectoria aprendí cómo funciona el desarrollo de un proyecto
             de principio a fin, y con el tiempo descubrí que lo que realmente me
             apasiona es <span class="font-medium text-ink">transformar procesos</span>.
           </p>
-          <p>
+          <p data-i18n="about_p2">
             Hoy me enfoco en el <span class="font-medium text-ink">análisis de datos</span> y
-            la <span class="font-medium text-ink">automatización de procesos</span>: los
-            estudio a fondo, encuentro lo que se puede mejorar y lo convierto en
-            soluciones más simples, eficientes y orientadas a valor.
+            la <span class="font-medium text-ink">automatización de procesos</span>:
+            encuentro lo que se puede mejorar y lo convierto en soluciones más
+            simples, eficientes y con impacto real.
           </p>
-          <p>
+          <p data-i18n="about_p3">
             Todo con un <span class="font-medium text-ink">enfoque minimalista</span>:
             priorizo la claridad, la funcionalidad y el valor real por encima de la
-            complejidad innecesaria.
+            complejidad innecesaria. Y sobre todo,
+            <span class="font-medium text-ink">me encanta aprender constantemente</span>:
+            cada reto nuevo es una oportunidad para crecer.
           </p>
         </div>
 
@@ -48,7 +50,7 @@ const highlights = [
               <span class="grid h-6 w-6 shrink-0 place-items-center rounded-md bg-accent-soft text-accent">
                 <Icon name="check" size={14} />
               </span>
-              {item}
+              <span data-i18n={item.key}>{item.label}</span>
             </li>
           ))}
         </ul>

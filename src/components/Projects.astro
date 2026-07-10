@@ -2,13 +2,17 @@
 import { projects } from '../data/projects';
 import Reveal from './Reveal.tsx';
 import Icon from './Icon.astro';
+
+// Base path (‘/’ en dev, ‘/andrea-zuluaga-portfolio/’ en producción) para servir imágenes de /public.
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const assetUrl = (path: string) => `${base}/${path.replace(/^\//, '')}`;
 ---
 <section id="projects" class="border-t border-border bg-surface py-20 sm:py-28">
   <div class="container-page">
     <Reveal client:visible>
       <div class="max-w-2xl">
-        <span class="eyebrow mb-4">Proyectos</span>
-        <p class="mt-4 text-muted">
+        <span class="eyebrow mb-4" data-i18n="projects_eyebrow">Proyectos</span>
+        <p class="mt-4 text-muted" data-i18n="projects_intro">
           Soluciones de datos, automatización e IA aplicadas a problemas reales de operación.
         </p>
       </div>
@@ -17,15 +21,28 @@ import Icon from './Icon.astro';
     <div class="mt-12 grid gap-5 sm:grid-cols-2">
       {projects.map((project, i) => (
         <Reveal client:visible delay={(i % 2) * 0.08}>
-          <article class="card-surface group flex h-full flex-col p-6 hover:-translate-y-1 hover:border-accent/60 hover:shadow-glow">
+          <article class="card-surface group flex h-full flex-col p-6 hover:-translate-y-1 hover:border-accent/60 hover:shadow-glow-soft">
+            {project.image && (
+              <div class="mb-5 overflow-hidden rounded-xl border border-border bg-bg">
+                <img
+                  src={assetUrl(project.image)}
+                  alt={`Vista previa de ${project.title}`}
+                  class="mx-auto h-28 w-full object-contain object-center p-2 transition-transform duration-500 group-hover:scale-[1.03] sm:h-32"
+                  loading="lazy"
+                />
+              </div>
+            )}
+
             <div class="flex items-center gap-3">
-              <span class="grid h-10 w-10 shrink-0 place-items-center rounded-xl border border-border bg-bg text-xs font-bold text-gradient">
-                {project.accent}
-              </span>
-              <h3 class="text-base font-semibold text-ink">{project.title}</h3>
+              {project.accent && (
+                <span class="grid h-10 w-10 shrink-0 place-items-center rounded-xl border border-border bg-bg text-xs font-bold text-gradient">
+                  {project.accent}
+                </span>
+              )}
+              <h3 class="text-base font-semibold text-ink" data-i18n={`proj_${i}_title`}>{project.title}</h3>
             </div>
 
-            <p class="mt-4 flex-1 text-sm leading-relaxed text-muted">
+            <p class="mt-4 flex-1 text-sm leading-relaxed text-muted" data-i18n={`proj_${i}_desc`}>
               {project.description}
             </p>
 

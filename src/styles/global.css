@@ -121,11 +121,11 @@
   .glow-blob {
     background: radial-gradient(
       circle at 50% 50%,
-      rgb(var(--accent) / 0.45) 0%,
-      rgb(var(--accent-2) / 0.40) 35%,
-      transparent 70%
+      rgb(var(--accent) / 0.28) 0%,
+      rgb(var(--accent-2) / 0.20) 42%,
+      transparent 72%
     );
-    filter: blur(60px);
+    filter: blur(74px);
   }
 
   .grid-mask {

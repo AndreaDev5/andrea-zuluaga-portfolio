@@ -5,17 +5,18 @@ import { site } from '../data/site';
 import Icon from './Icon.astro';
 import Reveal from './Reveal.tsx';
 ---
-<section id="home" class="relative overflow-hidden pt-32 pb-20 sm:pt-40 sm:pb-28">
-  <!-- Fondo minimalista: solo grid sutil (el glow va únicamente en el círculo de la foto) -->
+<section id="home" class="relative overflow-hidden pt-28 pb-20 sm:pt-36 sm:pb-28">
+  <!-- Fondo: grid sutil + red neuronal animada (nodos conectados que reaccionan al mouse) -->
   <div class="pointer-events-none absolute inset-0 -z-10">
     <div class="absolute inset-0 grid-mask"></div>
+    <canvas id="hero-neural" class="absolute inset-0 h-full w-full"></canvas>
   </div>
 
   <div class="container-page flex flex-col items-center text-center">
     <Reveal client:load>
       <div class="relative mx-auto mb-8 h-44 w-44 sm:h-52 sm:w-52">
-        <div class="glow-blob absolute inset-0 scale-110"></div>
-        <div class="relative h-full w-full overflow-hidden rounded-full border border-border shadow-glow">
+        <div class="glow-blob absolute inset-0 scale-125"></div>
+        <div class="relative h-full w-full overflow-hidden rounded-full border border-border shadow-glow-photo">
           <Image
             src={andrea}
             alt="Andrea Zuluaga"
@@ -31,39 +32,167 @@ import Reveal from './Reveal.tsx';
     <Reveal client:load delay={0.1}>
       <span class="eyebrow mb-5">
         <span class="h-1.5 w-1.5 rounded-full bg-accent"></span>
-        Disponible para nuevos retos
+        <span data-i18n="hero_badge">Disponible para nuevos retos</span>
       </span>
     </Reveal>
 
     <Reveal client:load delay={0.15}>
-      <h1 class="mx-auto max-w-3xl text-4xl font-semibold tracking-tight text-ink sm:text-6xl">
+      <h1 class="mx-auto mt-4 max-w-3xl text-3xl font-semibold tracking-tight text-ink sm:mt-6 sm:text-5xl">
         Andrea Zuluaga
       </h1>
     </Reveal>
 
     <Reveal client:load delay={0.22}>
-      <p class="mt-4 text-base font-medium text-muted sm:text-lg">
-        Data Analyst · <span class="text-gradient">Process Automation</span> · FinOps
+      <p class="mt-5 text-base font-medium text-muted sm:mt-7 sm:text-lg" data-i18n="hero_role">
+        Data Analyst · <span class="text-gradient">Process Automation</span> · Operations
       </p>
     </Reveal>
 
     <Reveal client:load delay={0.3}>
-      <p class="mx-auto mt-6 max-w-2xl text-base leading-relaxed text-muted sm:text-lg">
+      <p class="mx-auto mt-7 max-w-2xl text-base leading-relaxed text-muted sm:mt-8 sm:text-lg" data-i18n="hero_tagline">
         {site.tagline}
       </p>
     </Reveal>
 
     <Reveal client:load delay={0.4}>
-      <div class="mt-9 flex flex-wrap items-center justify-center gap-3">
+      <div class="mt-10 flex flex-wrap items-center justify-center gap-3 sm:mt-11">
         <a href="#projects" class="btn-primary">
-          Ver Proyectos
+          <span data-i18n="hero_cta_projects">Ver Proyectos</span>
           <Icon name="arrow-right" size={18} />
         </a>
         <a href="#contact" class="btn-ghost">
-          Contacto
+          <span data-i18n="hero_cta_contact">Contacto</span>
           <Icon name="mail" size={18} />
         </a>
       </div>
     </Reveal>
   </div>
 </section>
+
+<script is:inline>
+  (function () {
+    const canvas = document.getElementById('hero-neural');
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    // Colores del tema (moccachino / crema)
+    const ACCENT = '176, 137, 104';
+    const ACCENT2 = '224, 196, 168';
+    const LINK = 130; // distancia máxima para conectar nodos
+
+    let w = 0, h = 0, dpr = 1, nodes = [], raf = null;
+    let prevW = -1, resizeTimer = null, paused = false, scrollTimer = null;
+    const mouse = { x: null, y: null };
+
+    function resize() {
+      const rect = canvas.getBoundingClientRect();
+      const nw = rect.width, nh = rect.height;
+      dpr = Math.min(window.devicePixelRatio || 1, 2);
+      canvas.width = Math.max(1, Math.floor(nw * dpr));
+      canvas.height = Math.max(1, Math.floor(nh * dpr));
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+      // Solo regeneramos la red si cambia el ANCHO (evita saltos al hacer scroll,
+      // donde solo varía el alto por la barra del navegador). Si cambia el alto,
+      // reubicamos los nodos que queden fuera sin reiniciar todo.
+      w = nw; h = nh;
+      if (nodes.length === 0 || Math.abs(nw - prevW) > 1) {
+        prevW = nw;
+        initNodes();
+      } else {
+        for (const n of nodes) {
+          if (n.y > h) n.y = Math.random() * h;
+          if (n.x > w) n.x = Math.random() * w;
+        }
+      }
+    }
+
+    function initNodes() {
+      const count = Math.max(18, Math.min(64, Math.floor((w * h) / 17000)));
+      nodes = [];
+      for (let i = 0; i < count; i++) {
+        nodes.push({
+          x: Math.random() * w,
+          y: Math.random() * h,
+          vx: (Math.random() - 0.5) * (reduce ? 0 : 0.32),
+          vy: (Math.random() - 0.5) * (reduce ? 0 : 0.32),
+          r: Math.random() * 1.6 + 0.8,
+          c: Math.random() > 0.72 ? ACCENT2 : ACCENT,
+        });
+      }
+    }
+
+    function draw() {
+      ctx.clearRect(0, 0, w, h);
+
+      for (const n of nodes) {
+        n.x += n.vx; n.y += n.vy;
+        if (n.x < 0 || n.x > w) n.vx *= -1;
+        if (n.y < 0 || n.y > h) n.vy *= -1;
+      }
+
+      for (let i = 0; i < nodes.length; i++) {
+        const a = nodes[i];
+        for (let j = i + 1; j < nodes.length; j++) {
+          const b = nodes[j];
+          const dx = a.x - b.x, dy = a.y - b.y;
+          const dist = Math.hypot(dx, dy);
+          if (dist < LINK) {
+            ctx.strokeStyle = 'rgba(' + ACCENT + ',' + (1 - dist / LINK) * 0.22 + ')';
+            ctx.lineWidth = 1;
+            ctx.beginPath(); ctx.moveTo(a.x, a.y); ctx.lineTo(b.x, b.y); ctx.stroke();
+          }
+        }
+        if (mouse.x !== null) {
+          const dx = a.x - mouse.x, dy = a.y - mouse.y;
+          const dist = Math.hypot(dx, dy);
+          const R = LINK * 1.5;
+          if (dist < R) {
+            ctx.strokeStyle = 'rgba(' + ACCENT2 + ',' + (1 - dist / R) * 0.38 + ')';
+            ctx.lineWidth = 1;
+            ctx.beginPath(); ctx.moveTo(a.x, a.y); ctx.lineTo(mouse.x, mouse.y); ctx.stroke();
+          }
+        }
+      }
+
+      for (const n of nodes) {
+        ctx.fillStyle = 'rgba(' + n.c + ',0.55)';
+        ctx.beginPath(); ctx.arc(n.x, n.y, n.r, 0, Math.PI * 2); ctx.fill();
+      }
+
+      if (!reduce && !paused) raf = requestAnimationFrame(draw);
+    }
+
+    window.addEventListener('resize', () => {
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(resize, 150);
+    });
+    const HEADER_BAND = 72; // alto del menú fijo: ahí no reacciona la animación
+    window.addEventListener('mousemove', (e) => {
+      const rect = canvas.getBoundingClientRect();
+      const inside = e.clientX >= rect.left && e.clientX <= rect.right && e.clientY >= rect.top && e.clientY <= rect.bottom;
+      if (inside && e.clientY > HEADER_BAND) {
+        mouse.x = e.clientX - rect.left;
+        mouse.y = e.clientY - rect.top;
+      } else {
+        mouse.x = mouse.y = null;
+      }
+    });
+    window.addEventListener('blur', () => { mouse.x = mouse.y = null; });
+
+    // Pausa la animación mientras se hace scroll (evita repintado que afecta al menú fijo).
+    window.addEventListener('scroll', () => {
+      if (reduce) return;
+      if (!paused) {
+        paused = true;
+        if (raf) cancelAnimationFrame(raf);
+      }
+      clearTimeout(scrollTimer);
+      scrollTimer = setTimeout(() => { paused = false; draw(); }, 180);
+    }, { passive: true });
+
+    resize();
+    draw();
+  })();
+</script>

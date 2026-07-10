@@ -15,10 +15,10 @@ export const site = {
 } as const;
 
 export const nav = [
-  { label: 'Inicio', href: '#home' },
-  { label: 'Sobre mí', href: '#about' },
-  { label: 'Skills', href: '#skills' },
-  { label: 'Impacto', href: '#impact' },
-  { label: 'Proyectos', href: '#projects' },
-  { label: 'Contacto', href: '#contact' },
+  { label: 'Inicio', href: '#home', i18n: 'nav_home' },
+  { label: 'Sobre mí', href: '#about', i18n: 'nav_about' },
+  { label: 'Skills', href: '#skills', i18n: 'nav_skills' },
+  { label: 'Impacto', href: '#impact', i18n: 'nav_impact' },
+  { label: 'Proyectos', href: '#projects', i18n: 'nav_projects' },
+  { label: 'Contacto', href: '#contact', i18n: 'nav_contact' },
 ] as const;

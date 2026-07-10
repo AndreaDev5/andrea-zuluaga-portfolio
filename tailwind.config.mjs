@@ -28,6 +28,11 @@ export default {
       boxShadow: {
         subtle: '0 1px 2px rgba(0,0,0,0.06), 0 8px 24px -12px rgba(0,0,0,0.25)',
         glow: '0 0 0 1px rgb(var(--border)), 0 24px 70px -32px rgb(var(--accent) / 0.65)',
+        // Glows contenidos (spread negativo → no invaden la card vecina)
+        'glow-soft': '0 14px 34px -20px rgb(var(--accent) / 0.35)',
+        'glow-xs': '0 10px 26px -22px rgb(var(--accent) / 0.24)',
+        // Halo suave y simétrico para la foto (sin efecto "parche")
+        'glow-photo': '0 0 0 1px rgb(var(--border)), 0 0 55px -6px rgb(var(--accent) / 0.26)',
       },
       maxWidth: {
         content: '1120px',

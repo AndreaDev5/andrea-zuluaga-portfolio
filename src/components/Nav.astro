@@ -1,12 +1,12 @@
 ---
-import { nav, site } from '../data/site';
+import { nav } from '../data/site';
 import ThemeToggle from './ThemeToggle.astro';
 import Icon from './Icon.astro';
 import Planet from './Planet.astro';
 ---
 <header
   id="site-header"
-  class="fixed inset-x-0 top-0 z-50 border-b border-transparent transition-all duration-300"
+  class="sticky top-0 z-50 border-b border-border bg-bg transition-shadow duration-300"
 >
   <nav class="container-page flex h-16 items-center justify-between">
     <a href="#home" class="group flex items-center text-ink" aria-label="Andrea Zuluaga — inicio">
@@ -14,12 +14,13 @@ import Planet from './Planet.astro';
       <span class="sr-only">Andrea Zuluaga</span>
     </a>
 
-    <ul class="hidden items-center gap-1 md:flex">
+    <ul class="hidden items-center gap-1 sm:flex">
       {nav.map((item) => (
         <li>
           <a
             href={item.href}
-            class="rounded-lg px-3 py-2 text-sm text-muted transition-colors hover:bg-surface hover:text-ink"
+            data-i18n={item.i18n}
+            class="whitespace-nowrap rounded-lg px-2.5 py-2 text-sm text-muted transition-colors hover:bg-surface hover:text-ink"
           >
             {item.label}
           </a>
@@ -28,21 +29,23 @@ import Planet from './Planet.astro';
     </ul>
 
     <div class="flex items-center gap-2">
-      <a
-        href={site.github}
-        target="_blank"
-        rel="noopener noreferrer"
-        class="hidden h-9 w-9 place-items-center rounded-lg border border-border bg-card text-muted transition-colors hover:text-ink sm:grid"
-        aria-label="GitHub"
+      <button
+        id="lang-toggle"
+        type="button"
+        class="flex h-9 items-center gap-1.5 rounded-lg border border-border bg-card px-2.5 text-xs font-semibold text-muted transition-colors hover:text-ink"
+        aria-label="Cambiar idioma"
+        data-i18n-aria="aria_lang"
       >
-        <Icon name="github" size={18} />
-      </a>
+        <Icon name="globe" size={16} />
+        <span id="lang-label">ES</span>
+      </button>
       <ThemeToggle />
       <button
         id="menu-toggle"
         type="button"
-        class="grid h-9 w-9 place-items-center rounded-lg border border-border bg-card text-muted transition-colors hover:text-ink md:hidden"
+        class="grid h-9 w-9 place-items-center rounded-lg border border-border bg-card text-muted transition-colors hover:text-ink sm:hidden"
         aria-label="Abrir menú"
+        data-i18n-aria="aria_menu"
         aria-expanded="false"
       >
         <Icon name="menu" size={18} />
@@ -53,13 +56,14 @@ import Planet from './Planet.astro';
   <!-- Menú móvil -->
   <div
     id="mobile-menu"
-    class="hidden border-t border-border bg-surface/95 backdrop-blur md:hidden"
+    class="hidden border-t border-border bg-surface/95 backdrop-blur sm:hidden"
   >
     <ul class="container-page flex flex-col py-3">
       {nav.map((item) => (
         <li>
           <a
             href={item.href}
+            data-i18n={item.i18n}
             class="mobile-link block rounded-lg px-3 py-3 text-sm text-muted transition-colors hover:bg-card hover:text-ink"
           >
             {item.label}
@@ -71,13 +75,13 @@ import Planet from './Planet.astro';
 </header>
 
 <script is:inline>
-  // Header con borde/blur al hacer scroll
+  // Barra fija y sólida; solo añadimos una sombra sutil al hacer scroll.
   const header = document.getElementById('site-header');
   const onScroll = () => {
     if (window.scrollY > 8) {
-      header?.classList.add('border-border', 'bg-bg/80', 'backdrop-blur-md');
+      header?.classList.add('shadow-subtle');
     } else {
-      header?.classList.remove('border-border', 'bg-bg/80', 'backdrop-blur-md');
+      header?.classList.remove('shadow-subtle');
     }
   };
   onScroll();

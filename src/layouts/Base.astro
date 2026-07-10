@@ -68,5 +68,38 @@ const ogImage = new URL(`${base}og.jpg`.replace(/\/+/g, '/'), Astro.site ?? site
   </head>
   <body>
     <slot />
+
+    <script>
+      import { dict } from '../data/i18n';
+
+      const KEY = 'lang';
+      const getLang = () => (localStorage.getItem(KEY) === 'en' ? 'en' : 'es');
+
+      function applyLang(lang) {
+        const d = dict[lang] || dict.es;
+        document.querySelectorAll('[data-i18n]').forEach((el) => {
+          const k = el.getAttribute('data-i18n');
+          if (k && d[k] != null) el.innerHTML = d[k];
+        });
+        document.querySelectorAll('[data-i18n-ph]').forEach((el) => {
+          const k = el.getAttribute('data-i18n-ph');
+          if (k && d[k] != null) el.setAttribute('placeholder', d[k]);
+        });
+        document.querySelectorAll('[data-i18n-aria]').forEach((el) => {
+          const k = el.getAttribute('data-i18n-aria');
+          if (k && d[k] != null) el.setAttribute('aria-label', d[k]);
+        });
+        document.documentElement.lang = lang;
+        const lbl = document.getElementById('lang-label');
+        if (lbl) lbl.textContent = lang.toUpperCase();
+        localStorage.setItem(KEY, lang);
+        window.__lang = lang;
+      }
+
+      applyLang(getLang());
+      document.getElementById('lang-toggle')?.addEventListener('click', () => {
+        applyLang(getLang() === 'es' ? 'en' : 'es');
+      });
+    </script>
   </body>
 </html>

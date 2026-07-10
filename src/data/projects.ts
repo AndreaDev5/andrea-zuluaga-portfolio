@@ -13,29 +13,22 @@ export const projects: Project[] = [
   {
     title: 'Dashboard de KPIs Operativos',
     description:
-      'Tablero analítico que centraliza indicadores de operación en tiempo real, reemplazando reportes manuales por una vista única con drill-down por equipo y proyecto.',
-    tags: ['Claude', 'Python', 'SQL', 'KPIs'],
-    accent: 'KPI',
+      'Plataforma que unifica los indicadores clave de la operación en un solo lugar. Migré los indicadores (reportes) desde Power BI a un proyecto sobre Claude, eliminando las fuentes externas que dependían de actualización manual para trabajar con una única fuente de datos confiable. Este dashboard integra diferentes reportes como el Módulo de Horas, WIP, Controles WIP, Facturación y Proyección.',
+    tags: ['Claude', 'Power BI', 'SQL', 'KPIs'],
+    image: 'projects/bision-lens.png',
   },
   {
     title: 'Automatización de Reportes',
     description:
       'Automatización de procesos en el área de Operaciones, como el envío de reportes automáticos por correo. Reemplaza la consolidación y el envío manual por un flujo programado y confiable.',
     tags: ['Claude', 'Python', 'FinOps'],
-    accent: 'AUTO',
+    image: 'projects/automatizacion-reportes.svg',
   },
   {
-    title: 'Sistema de Control de Horas',
+    title: 'Agente de Reporte de Horas',
     description:
       'Agente que envía un reporte semanal de las horas imputadas por cada colaborador, con semáforo de cumplimiento (oportuno / no oportuno) y alertas automáticas.',
     tags: ['Claude', 'Python', 'SQL'],
-    accent: 'HRS',
-  },
-  {
-    title: 'Asistente IA para Operaciones',
-    description:
-      'Agente de IA que asiste el análisis operativo: responde preguntas sobre los datos, detecta anomalías y sugiere acciones sobre los procesos.',
-    tags: ['Claude', 'AI Agents', 'Prompt Engineering'],
-    accent: 'AI',
+    image: 'projects/control-horas.svg',
   },
 ];

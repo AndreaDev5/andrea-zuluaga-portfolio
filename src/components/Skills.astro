@@ -12,7 +12,7 @@ import Icon from './Icon.astro';
     <div class="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
       {skills.map((group, i) => (
         <Reveal client:visible delay={i * 0.08}>
-          <div class="card-surface group h-full p-5 hover:-translate-y-1 hover:border-accent/60 hover:shadow-glow">
+          <div class="card-surface group h-full p-5 hover:-translate-y-1 hover:border-accent/60 hover:shadow-glow-soft">
             <span class="grid h-10 w-10 place-items-center rounded-xl bg-accent-soft text-accent transition-transform group-hover:scale-105">
               <Icon name={group.icon} size={20} />
             </span>

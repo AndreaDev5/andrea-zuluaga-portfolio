@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 180" fill="none" role="img" aria-label="Automatización de reportes por correo">
+  <defs>
+    <linearGradient id="acc" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#b08968"/>
+      <stop offset="1" stop-color="#e0c4a8"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="50%" cy="45%" r="55%">
+      <stop offset="0" stop-color="#b08968" stop-opacity="0.28"/>
+      <stop offset="100%" stop-color="#b08968" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <!-- glow suave -->
+  <ellipse cx="180" cy="88" rx="120" ry="70" fill="url(#glow)"/>
+
+  <!-- tile (mismo motivo que Bisión Lens) -->
+  <rect x="132" y="40" width="96" height="96" rx="22" fill="#1c2128" stroke="#2c313a" stroke-width="1.5"/>
+
+  <!-- sobre / email -->
+  <rect x="150" y="62" width="60" height="42" rx="7" fill="#171b22" stroke="url(#acc)" stroke-width="3"/>
+  <path d="M153 68 L180 88 L207 68" stroke="url(#acc)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+
+  <!-- badge de automatización (refresh) -->
+  <circle cx="216" cy="52" r="16" fill="#121519" stroke="#2c313a" stroke-width="1.5"/>
+  <g transform="translate(207 43) scale(0.75)" stroke="url(#acc)" stroke-width="2.4" fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"/>
+    <path d="M21 3v5h-5"/>
+    <path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"/>
+    <path d="M3 21v-5h5"/>
+  </g>
+
+  <!-- destellos -->
+  <circle cx="96" cy="58" r="3" fill="#b08968"/>
+  <circle cx="270" cy="70" r="2.5" fill="#e0c4a8"/>
+  <circle cx="110" cy="120" r="2" fill="#8b949e"/>
+  <circle cx="255" cy="118" r="2" fill="#b08968"/>
+</svg>

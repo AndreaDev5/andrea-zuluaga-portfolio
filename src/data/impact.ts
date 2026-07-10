@@ -6,7 +6,7 @@ export type Metric = {
 };
 
 export const impact: Metric[] = [
-  { value: 12, suffix: '+', label: 'Procesos automatizados' },
+  { value: 6, suffix: '+', label: 'Procesos automatizados' },
   { value: 8, suffix: '+', label: 'Dashboards creados' },
   { value: 8, suffix: '+', label: 'Reportes optimizados' },
   { value: 8, suffix: '+', label: 'Indicadores implementados' },
