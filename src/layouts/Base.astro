@@ -7,7 +7,7 @@ interface Props {
   title?: string;
   description?: string;
 }
-const { title = `${site.name} — Data Analyst, Automation & FinOps`, description = site.description } = Astro.props;
+const { title = `${site.name} — Data Analytics, AI Solutions & Process Automation`, description = site.description } = Astro.props;
 
 const base = import.meta.env.BASE_URL;
 const canonical = new URL(Astro.url.pathname, Astro.site ?? site.url).href;
@@ -35,7 +35,7 @@ const ogImage = new URL(`${base}og.jpg`.replace(/\/+/g, '/'), Astro.site ?? site
     <title>{title}</title>
     <meta name="description" content={description} />
     <meta name="author" content={site.name} />
-    <meta name="keywords" content="Data Analyst, Process Automation, FinOps, Power BI, SQL, Python, AI Agents, KPI, Andrea Zuluaga" />
+    <meta name="keywords" content="Data Analytics, AI Solutions, Process Automation, FinOps, Power BI, SQL, Python, AI Agents, KPI, Andrea Zuluaga" />
     <link rel="canonical" href={canonical} />
     <meta name="theme-color" content="#121519" />
 
@@ -59,7 +59,7 @@ const ogImage = new URL(`${base}og.jpg`.replace(/\/+/g, '/'), Astro.site ?? site
       '@context': 'https://schema.org',
       '@type': 'Person',
       name: site.name,
-      jobTitle: 'Data Analyst | Process Automation | FinOps',
+      jobTitle: 'Data Analytics | AI Solutions | Process Automation',
       description: site.description,
       url: site.url,
       email: site.email,
@@ -75,11 +75,18 @@ const ogImage = new URL(`${base}og.jpg`.replace(/\/+/g, '/'), Astro.site ?? site
       const KEY = 'lang';
       const getLang = () => (localStorage.getItem(KEY) === 'en' ? 'en' : 'es');
 
+      // Evita que la reaplicación se dispare a sí misma en bucle
+      let aplicando = false;
+
       function applyLang(lang) {
+        if (aplicando) return;
+        aplicando = true;
+
         const d = dict[lang] || dict.es;
         document.querySelectorAll('[data-i18n]').forEach((el) => {
           const k = el.getAttribute('data-i18n');
-          if (k && d[k] != null) el.innerHTML = d[k];
+          // Solo escribimos si cambió: menos mutaciones y menos repintados
+          if (k && d[k] != null && el.innerHTML !== d[k]) el.innerHTML = d[k];
         });
         document.querySelectorAll('[data-i18n-ph]').forEach((el) => {
           const k = el.getAttribute('data-i18n-ph');
@@ -94,9 +101,22 @@ const ogImage = new URL(`${base}og.jpg`.replace(/\/+/g, '/'), Astro.site ?? site
         if (lbl) lbl.textContent = lang.toUpperCase();
         localStorage.setItem(KEY, lang);
         window.__lang = lang;
+
+        // Se libera en el siguiente macrotask, cuando ya se procesaron las
+        // mutaciones que acabamos de provocar (así el observer no se retroalimenta).
+        setTimeout(() => { aplicando = false; }, 0);
       }
 
       applyLang(getLang());
+
+      // Los bloques animados son islands de React: al hidratarse (o al animarse)
+      // pueden volver a pintar su contenido original en español. Reaplicamos el
+      // idioma cuando eso ocurra para que la traducción no se pierda.
+      window.addEventListener('load', () => applyLang(getLang()));
+
+      const observer = new MutationObserver(() => applyLang(getLang()));
+      observer.observe(document.body, { childList: true, subtree: true });
+
       document.getElementById('lang-toggle')?.addEventListener('click', () => {
         applyLang(getLang() === 'es' ? 'en' : 'es');
       });

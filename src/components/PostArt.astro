@@ -1,0 +1,85 @@
+---
+import ArtCimientos from './art/ArtCimientos.astro';
+import ArtContexto from './art/ArtContexto.astro';
+
+// Registro de ilustraciones. Para agregar una nueva:
+// 1. crea el componente en src/components/art/
+// 2. regístralo aquí
+// 3. usa su clave en el frontmatter del post (campo `art`)
+const REGISTRO = {
+  cimientos: { componente: ArtCimientos },
+  contexto: { componente: ArtContexto },
+} as const;
+
+export type ArtKey = keyof typeof REGISTRO;
+
+interface Props {
+  art: string;
+  class?: string;
+}
+const { art, class: className = '' } = Astro.props;
+const Componente = REGISTRO[art as ArtKey]?.componente;
+---
+{Componente && (
+  <figure class={`art-frame ${className}`}>
+    <div class="art-bar">
+      <span class="art-dots" aria-hidden="true">
+        <i></i><i></i><i></i>
+      </span>
+      <span class="art-live" aria-hidden="true">
+        <i></i>
+        <span class="mono-meta">live</span>
+      </span>
+    </div>
+    <div class="art-body">
+      <Componente />
+    </div>
+  </figure>
+)}
+
+<style>
+  .art-frame {
+    overflow: hidden;
+    border: 1px solid rgb(var(--border));
+    border-radius: 1.25rem;
+    background: rgb(var(--bg));
+    transition: border-color 0.35s ease, box-shadow 0.35s ease, transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .art-bar {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.65rem 0.9rem;
+    border-bottom: 1px solid rgb(var(--border));
+    background: rgb(var(--surface));
+  }
+
+  .art-dots { display: inline-flex; gap: 5px; }
+  .art-dots i {
+    width: 7px;
+    height: 7px;
+    border-radius: 999px;
+    background: rgb(var(--border));
+  }
+
+  .art-live {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    margin-left: auto;
+  }
+  .art-live i {
+    width: 6px;
+    height: 6px;
+    border-radius: 999px;
+    background: rgb(var(--accent));
+    animation: latido 1.8s ease-in-out infinite;
+  }
+  @keyframes latido {
+    0%, 100% { opacity: 0.35; box-shadow: 0 0 0 0 rgb(var(--accent) / 0); }
+    50% { opacity: 1; box-shadow: 0 0 0 4px rgb(var(--accent) / 0.14); }
+  }
+
+  .art-body { padding: 0.5rem 0.75rem 0.25rem; }
+</style>

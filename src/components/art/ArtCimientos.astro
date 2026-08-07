@@ -1,0 +1,136 @@
+---
+// Ilustración: "Los cimientos de una organización preparada para la IA"
+// Flujo vertical uniforme: Datos → Análisis → Gobernanza de datos → AI → Innovación.
+// SVG inline: usa los tokens del tema, así que se adapta a modo claro y oscuro.
+const X = 70;          // borde izquierdo de las cajas
+const W = 320;         // ancho de las cajas
+const H = 48;          // alto de cada caja
+const CX = X + W / 2;  // centro horizontal
+
+const pasos = [
+  { n: '01', label: 'DATOS', y: 24 },
+  { n: '02', label: 'ANÁLISIS', y: 106 },
+  { n: '03', label: 'GOBERNANZA DE DATOS', y: 188 },
+  { n: '04', label: 'IA', y: 270 },
+];
+
+// Paso final destacado: el resultado del recorrido
+const innovacion = { n: '05', label: 'INNOVACIÓN', y: 352, h: 54 };
+
+// Flechas entre cajas
+const flechas = [...pasos, innovacion].slice(0, -1).map((p, i) => ({
+  desde: p.y + H,
+  hasta: [...pasos, innovacion][i + 1].y,
+  delay: `${i * 0.28}s`,
+}));
+---
+<svg viewBox="0 0 460 424" fill="none" xmlns="http://www.w3.org/2000/svg" class="art-svg" role="img" aria-label="Flujo de datos a análisis, gobernanza de datos, inteligencia artificial e innovación">
+  <defs>
+    <pattern id="grid-cim" width="26" height="26" patternUnits="userSpaceOnUse">
+      <path d="M26 0H0V26" stroke="rgb(var(--border))" stroke-width="1" opacity="0.5" />
+    </pattern>
+    <linearGradient id="core-cim" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="rgb(var(--accent))" />
+      <stop offset="100%" stop-color="rgb(var(--accent-2))" />
+    </linearGradient>
+    <radialGradient id="halo-cim">
+      <stop offset="0%" stop-color="rgb(var(--accent))" stop-opacity="0.22" />
+      <stop offset="100%" stop-color="rgb(var(--accent))" stop-opacity="0" />
+    </radialGradient>
+  </defs>
+
+  <rect width="460" height="424" fill="url(#grid-cim)" opacity="0.3" />
+  <ellipse cx={CX} cy="212" rx="200" ry="180" fill="url(#halo-cim)" class="halo" />
+
+  <!-- Flechas de conexión -->
+  {flechas.map((f) => (
+    <g class="flecha" style={`--d: ${f.delay}`}>
+      <line
+        x1={CX} y1={f.desde + 6} x2={CX} y2={f.hasta - 10}
+        stroke="rgb(var(--accent))" stroke-width="1.8" stroke-linecap="round" opacity="0.6"
+      />
+      <path
+        d={`M${CX - 6} ${f.hasta - 14} L${CX} ${f.hasta - 7} L${CX + 6} ${f.hasta - 14}`}
+        stroke="rgb(var(--accent))" stroke-width="1.8"
+        stroke-linecap="round" stroke-linejoin="round" fill="none"
+      />
+    </g>
+  ))}
+
+  <!-- Pasos -->
+  {pasos.map((p, i) => (
+    <g class="paso" style={`--d: ${i * 0.28}s`}>
+      <rect
+        x={X} y={p.y} width={W} height={H} rx="12"
+        fill="rgb(var(--surface))" stroke="rgb(var(--border))" stroke-width="1"
+      />
+      <rect x={X} y={p.y} width="3.5" height={H} rx="1.75" fill="rgb(var(--accent))" class="paso-barra" />
+      <text
+        x={X + 20} y={p.y + H / 2 + 4}
+        fill="rgb(var(--accent-2))" font-size="10.5" letter-spacing="1.2" opacity="0.75"
+        font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace"
+      >{p.n}</text>
+      <text
+        x={X + 50} y={p.y + H / 2 + 4.2}
+        fill="rgb(var(--text-secondary))" font-size="11.5" letter-spacing="1.6"
+        font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace"
+      >{p.label}</text>
+      <circle cx={X + W - 22} cy={p.y + H / 2} r="3" fill="rgb(var(--accent-2))" class="paso-punto" />
+    </g>
+  ))}
+
+  <!-- Paso final: innovación -->
+  <g class="paso" style="--d: 1.12s">
+    <rect
+      x={X} y={innovacion.y} width={W} height={innovacion.h} rx="13"
+      fill="rgb(var(--surface))" stroke="rgb(var(--accent) / 0.6)" stroke-width="1.4"
+    />
+    <rect
+      x={X} y={innovacion.y} width="3.5" height={innovacion.h} rx="1.75"
+      fill="url(#core-cim)" class="paso-barra"
+    />
+    <text
+      x={X + 20} y={innovacion.y + innovacion.h / 2 + 4}
+      fill="rgb(var(--accent-2))" font-size="10.5" letter-spacing="1.2" opacity="0.75"
+      font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace"
+    >{innovacion.n}</text>
+    <text
+      x={X + 50} y={innovacion.y + innovacion.h / 2 + 4.5}
+      fill="rgb(var(--accent-2))" font-size="12.5" letter-spacing="2"
+      font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace"
+    >{innovacion.label}</text>
+    <path
+      d="M0 -9l2.1 5.9L8 -1l-5.9 2.1L0 7l-2.1-5.9L-8 -1l5.9-2.1L0 -9Z"
+      fill="url(#core-cim)"
+      class="paso-punto"
+      transform={`translate(${X + W - 30}, ${innovacion.y + innovacion.h / 2})`}
+    />
+  </g>
+</svg>
+
+<style>
+  .art-svg { width: 100%; height: auto; display: block; }
+
+  /* Los pasos se encienden en secuencia para que se lea el recorrido */
+  .paso-barra,
+  .paso-punto {
+    animation: paso-pulso 4.4s ease-in-out infinite;
+    animation-delay: var(--d);
+  }
+  @keyframes paso-pulso {
+    0%, 100% { opacity: 0.3; }
+    45% { opacity: 1; }
+  }
+
+  .flecha { animation: flecha-pulso 4.4s ease-in-out infinite; animation-delay: var(--d); }
+  @keyframes flecha-pulso {
+    0%, 100% { opacity: 0.35; }
+    45% { opacity: 1; }
+  }
+
+  .halo { animation: halo-late 6s ease-in-out infinite; transform-origin: 230px 212px; }
+  @keyframes halo-late {
+    0%, 100% { opacity: 0.45; transform: scale(0.95); }
+    50% { opacity: 0.9; transform: scale(1.04); }
+  }
+</style>

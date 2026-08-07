@@ -1,0 +1,82 @@
+---
+import Base from '../../layouts/Base.astro';
+import Nav from '../../components/Nav.astro';
+import Footer from '../../components/Footer.astro';
+import PostList from '../../components/PostList.astro';
+import Reveal from '../../components/Reveal.tsx';
+import { getPublishedPosts } from '../../lib/blog';
+import { site } from '../../data/site';
+
+const posts = await getPublishedPosts();
+
+// Series presentes en el blog (solo para el contador de la cabecera).
+const series = [...new Set(posts.map((p) => p.data.series).filter(Boolean))] as string[];
+const pad = (n: number) => String(n).padStart(2, '0');
+---
+<Base
+  title={`Blog — ${site.name}`}
+  description="Artículos sobre adopción empresarial de Inteligencia Artificial, gobierno de datos, automatización de procesos y analítica aplicada a empresas."
+>
+  <Nav />
+  <main>
+    <!-- Cabecera -->
+    <section class="relative overflow-hidden pt-16 pb-14 sm:pt-24 sm:pb-16">
+      <div class="pointer-events-none absolute inset-0 grid-mask" aria-hidden="true"></div>
+
+      <div class="container-page relative">
+        <Reveal client:load>
+          <span class="mono-meta">~/blog</span>
+          <h1
+            class="mt-4 max-w-3xl text-2xl font-semibold leading-snug tracking-tight text-ink sm:text-3xl"
+            data-i18n="blog_title"
+          >
+            Datos e Inteligencia Artificial:
+            <span class="text-gradient">de la información a la transformación</span>
+          </h1>
+          <p class="mt-4 max-w-2xl text-sm leading-relaxed text-muted sm:text-base" data-i18n="blog_subtitle">
+            Explorando cómo las organizaciones pueden integrar Inteligencia Artificial de manera
+            estratégica, comenzando por el entendimiento del negocio, sus procesos actuales y las
+            oportunidades de mejora que permitan construir soluciones de valor.
+          </p>
+          <div class="mt-6 flex flex-wrap items-center gap-3">
+            <span class="mono-meta">
+              {pad(posts.length)}
+              <span data-i18n={posts.length === 1 ? 'blog_posts_one' : 'blog_posts_many'}>
+                {posts.length === 1 ? 'publicación' : 'publicaciones'}
+              </span>
+            </span>
+            {series.length > 0 && (
+              <>
+                <span class="text-border" aria-hidden="true">/</span>
+                <span class="mono-meta">
+                  {pad(series.length)}
+                  <span data-i18n={series.length === 1 ? 'blog_series_one' : 'blog_series_many'}>
+                    {series.length === 1 ? 'serie' : 'series'}
+                  </span>
+                </span>
+              </>
+            )}
+          </div>
+        </Reveal>
+      </div>
+    </section>
+
+    <!-- Todas las publicaciones -->
+    <section class="border-t border-border py-16 sm:py-20">
+      <div class="container-page">
+        <Reveal client:visible>
+          <span class="eyebrow mb-6" data-i18n="blog_all">Todas las publicaciones</span>
+        </Reveal>
+
+        {posts.length === 0 ? (
+          <p class="mt-10 text-sm text-muted" data-i18n="blog_none">Aún no hay publicaciones.</p>
+        ) : (
+          <div class="mt-6">
+            <PostList posts={posts} />
+          </div>
+        )}
+      </div>
+    </section>
+  </main>
+  <Footer />
+</Base>

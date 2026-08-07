@@ -3,13 +3,17 @@ import { nav } from '../data/site';
 import ThemeToggle from './ThemeToggle.astro';
 import Icon from './Icon.astro';
 import Planet from './Planet.astro';
+
+// Prefijo del sitio ('/' en dev, '/andrea-zuluaga-portfolio/' en producción).
+// Se antepone a los anclas para que el menú también funcione desde /blog/*.
+const home = `${import.meta.env.BASE_URL.replace(/\/$/, '')}/`;
 ---
 <header
   id="site-header"
   class="sticky top-0 z-50 border-b border-border bg-bg transition-shadow duration-300"
 >
   <nav class="container-page flex h-16 items-center justify-between">
-    <a href="#home" class="group flex items-center text-ink" aria-label="Andrea Zuluaga — inicio">
+    <a href={home} class="group flex items-center text-ink" aria-label="Andrea Zuluaga — inicio">
       <Planet class="transition-transform duration-500 group-hover:rotate-12" size={30} />
       <span class="sr-only">Andrea Zuluaga</span>
     </a>
@@ -18,7 +22,7 @@ import Planet from './Planet.astro';
       {nav.map((item) => (
         <li>
           <a
-            href={item.href}
+            href={`${home}${item.href}`}
             data-i18n={item.i18n}
             class="whitespace-nowrap rounded-lg px-2.5 py-2 text-sm text-muted transition-colors hover:bg-surface hover:text-ink"
           >
@@ -62,7 +66,7 @@ import Planet from './Planet.astro';
       {nav.map((item) => (
         <li>
           <a
-            href={item.href}
+            href={`${home}${item.href}`}
             data-i18n={item.i18n}
             class="mobile-link block rounded-lg px-3 py-3 text-sm text-muted transition-colors hover:bg-card hover:text-ink"
           >

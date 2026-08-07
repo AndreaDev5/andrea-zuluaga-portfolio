@@ -1,0 +1,161 @@
+---
+// Ilustración: "El contexto es la verdadera inteligencia detrás de la IA"
+// Un robot alimentado por nodos de contexto empresarial: datos, procesos, personas, reglas…
+const NW = 128;
+const NH = 36;
+const CX = 230;
+const CY = 164;
+
+// Siete nodos en sentido horario desde arriba: estrategia → datos → gobierno →
+// procesos → personas → AI → seguridad. Todos alimentan el contexto del centro.
+const nodos = [
+  {
+    x: 230, y: 32, label: 'ESTRATEGIA', delay: '0s',
+    icon: '<path d="M-5.5 8.5v-17"/><path d="M-5.5 -7.5h11l-2.7 4.2 2.7 4.2h-11"/>',
+  },
+  {
+    x: 352, y: 82, label: 'DATOS', delay: '0.3s',
+    icon: '<ellipse cx="0" cy="-5.5" rx="6.8" ry="2.7"/><path d="M-6.8 -5.5V5.5c0 1.5 3 2.7 6.8 2.7s6.8-1.2 6.8-2.7V-5.5"/><path d="M-6.8 0c0 1.5 3 2.7 6.8 2.7S6.8 1.5 6.8 0"/>',
+  },
+  {
+    x: 382, y: 193, label: 'GOBIERNO', delay: '0.6s',
+    icon: '<path d="M-5 -8h6l4.5 4.5V8a1 1 0 0 1-1 1h-9.5a1 1 0 0 1-1-1v-15a1 1 0 0 1 1-1Z"/><path d="M1 -8v4.5h4.5"/><path d="M-2.5 1.5h5M-2.5 4.5h3.5"/>',
+  },
+  {
+    x: 298, y: 283, label: 'PROCESOS', delay: '0.9s',
+    icon: '<circle cx="0" cy="0" r="3"/><path d="M0 -8.5v3.5M0 5v3.5M-8.5 0h3.5M5 0h3.5M-6 -6l2.4 2.4M3.6 3.6L6 6M-6 6l2.4-2.4M3.6 -3.6L6 -6"/>',
+  },
+  {
+    x: 162, y: 283, label: 'PERSONAS', delay: '1.2s',
+    icon: '<circle cx="0" cy="-3.5" r="3.4"/><path d="M-6.2 7.5c0-3.2 2.8-5.4 6.2-5.4s6.2 2.2 6.2 5.4"/>',
+  },
+  {
+    x: 78, y: 193, label: 'IA', delay: '1.5s',
+    icon: '<rect x="-5" y="-5" width="10" height="10" rx="2.2"/><path d="M-2.2 -8.4v3.4M2.2 -8.4v3.4M-2.2 5v3.4M2.2 5v3.4M-8.4 -2.2h3.4M-8.4 2.2h3.4M5 -2.2h3.4M5 2.2h3.4"/>',
+  },
+  {
+    x: 108, y: 82, label: 'SEGURIDAD', delay: '1.8s',
+    icon: '<rect x="-6.2" y="-1.6" width="12.4" height="9.6" rx="2.2"/><path d="M-3.6 -1.6v-3.2a3.6 3.6 0 0 1 7.2 0v3.2"/>',
+  },
+];
+---
+<svg viewBox="0 0 460 330" fill="none" xmlns="http://www.w3.org/2000/svg" class="art-svg" role="img" aria-label="Un robot conectado a nodos de datos, procesos, personas, reglas, objetivos y experiencia">
+  <defs>
+    <pattern id="grid-ctx" width="26" height="26" patternUnits="userSpaceOnUse">
+      <path d="M26 0H0V26" stroke="rgb(var(--border))" stroke-width="1" opacity="0.5" />
+    </pattern>
+    <linearGradient id="core-ctx" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="rgb(var(--accent))" />
+      <stop offset="100%" stop-color="rgb(var(--accent-2))" />
+    </linearGradient>
+    <radialGradient id="halo-ctx">
+      <stop offset="0%" stop-color="rgb(var(--accent))" stop-opacity="0.30" />
+      <stop offset="100%" stop-color="rgb(var(--accent))" stop-opacity="0" />
+    </radialGradient>
+  </defs>
+
+  <rect width="460" height="330" fill="url(#grid-ctx)" opacity="0.32" />
+  <circle cx={CX} cy={CY} r="100" fill="url(#halo-ctx)" class="halo" />
+
+  <!-- Cables: el contexto fluye hacia el robot -->
+  {nodos.map((n) => (
+    <line
+      x1={n.x} y1={n.y} x2={CX} y2={CY}
+      stroke="rgb(var(--accent))" stroke-width="1.3"
+      stroke-dasharray="3 6" stroke-linecap="round" opacity="0.45"
+      class="cable" style={`--d: ${n.delay}`}
+    />
+  ))}
+
+  <!-- Órbita -->
+  <circle
+    cx={CX} cy={CY} r="66"
+    stroke="rgb(var(--border))" stroke-width="1" stroke-dasharray="2 9" class="orbita"
+  />
+
+  <!-- Nodos de contexto -->
+  {nodos.map((n) => (
+    <g class="nodo" style={`--d: ${n.delay}`}>
+      <rect
+        x={n.x - NW / 2} y={n.y - NH / 2} width={NW} height={NH} rx="9"
+        fill="rgb(var(--surface))" stroke="rgb(var(--border))" stroke-width="1"
+      />
+      <g
+        transform={`translate(${n.x - NW / 2 + 21}, ${n.y})`}
+        stroke="rgb(var(--accent-2))" stroke-width="1.35"
+        stroke-linecap="round" stroke-linejoin="round" fill="none"
+        class="nodo-icono" set:html={n.icon}
+      />
+      <text
+        x={n.x - NW / 2 + 38} y={n.y + 3.8}
+        fill="rgb(var(--text-secondary))" font-size="9.5" letter-spacing="1.4"
+        font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace"
+      >{n.label}</text>
+    </g>
+  ))}
+
+  <!-- ============ ROBOT ============ -->
+  <g class="robot">
+    <!-- Antena -->
+    <line x1={CX} y1="112" x2={CX} y2="126" stroke="rgb(var(--border))" stroke-width="2" stroke-linecap="round" />
+    <circle cx={CX} cy="107" r="4.5" fill="url(#core-ctx)" class="antena" />
+
+    <!-- Orejas -->
+    <rect x="179" y="148" width="9" height="22" rx="4" fill="rgb(var(--surface))" stroke="rgb(var(--border))" stroke-width="1" />
+    <rect x="272" y="148" width="9" height="22" rx="4" fill="rgb(var(--surface))" stroke="rgb(var(--border))" stroke-width="1" />
+
+    <!-- Cabeza -->
+    <rect x="188" y="126" width="84" height="64" rx="16" fill="rgb(var(--surface))" stroke="rgb(var(--border))" stroke-width="1.4" />
+
+    <!-- Visor -->
+    <rect x="198" y="140" width="64" height="30" rx="10" fill="rgb(var(--bg))" stroke="rgb(var(--border))" stroke-width="1" />
+    <g class="ojos">
+      <circle cx="215" cy="155" r="6" fill="url(#core-ctx)" />
+      <circle cx="245" cy="155" r="6" fill="url(#core-ctx)" />
+    </g>
+
+    <!-- Boca -->
+    <rect x="217" y="176" width="26" height="4" rx="2" fill="rgb(var(--text-secondary))" opacity="0.5" />
+
+    <text
+      x={CX} y="206" text-anchor="middle"
+      fill="rgb(var(--text-secondary))" font-size="8.5" letter-spacing="1.8" opacity="0.8"
+      font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace"
+    >CONTEXTO</text>
+  </g>
+
+</svg>
+
+<style>
+  .art-svg { width: 100%; height: auto; display: block; }
+
+  .cable { animation: cable-flujo 2.2s linear infinite; animation-delay: var(--d); }
+  @keyframes cable-flujo { to { stroke-dashoffset: -18; } }
+
+  .nodo-icono { animation: icono-pulso 3.2s ease-in-out infinite; animation-delay: var(--d); }
+  @keyframes icono-pulso {
+    0%, 100% { opacity: 0.45; }
+    50% { opacity: 1; }
+  }
+
+  .orbita { animation: orbita-gira 26s linear infinite; transform-origin: 230px 164px; }
+  @keyframes orbita-gira { to { transform: rotate(360deg); } }
+
+  .robot { animation: flota 7s ease-in-out infinite; }
+  @keyframes flota { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-5px); } }
+
+  .antena { animation: parpadeo-antena 2.4s ease-in-out infinite; }
+  @keyframes parpadeo-antena { 0%, 100% { opacity: 0.45; } 50% { opacity: 1; } }
+
+  .ojos { animation: parpadeo 5.5s ease-in-out infinite; transform-origin: 230px 155px; }
+  @keyframes parpadeo {
+    0%, 92%, 100% { transform: scaleY(1); }
+    95% { transform: scaleY(0.12); }
+  }
+
+  .halo { animation: halo-late 5s ease-in-out infinite; transform-origin: 230px 164px; }
+  @keyframes halo-late {
+    0%, 100% { opacity: 0.55; transform: scale(0.95); }
+    50% { opacity: 1; transform: scale(1.05); }
+  }
+</style>

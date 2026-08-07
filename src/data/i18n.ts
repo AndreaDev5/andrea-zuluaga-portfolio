@@ -12,13 +12,14 @@ export const dict: Record<Lang, Record<string, string>> = {
     nav_skills: 'Skills',
     nav_impact: 'Impacto',
     nav_projects: 'Proyectos',
+    nav_blog: 'Blog',
     nav_contact: 'Contacto',
     aria_menu: 'Abrir menú',
     aria_lang: 'Cambiar idioma',
 
     // Hero
     hero_badge: 'Disponible para nuevos retos',
-    hero_role: 'Data Analyst · <span class="text-gradient">Process Automation</span> · Operations',
+    hero_role: 'Data Analytics · <span class="text-gradient">AI Solutions</span> · Process Automation',
     hero_tagline:
       'Transformo datos operativos en decisiones estratégicas mediante automatización, análisis y optimización de procesos.',
     hero_cta_projects: 'Ver Proyectos',
@@ -63,6 +64,24 @@ export const dict: Record<Lang, Record<string, string>> = {
     proj_2_desc:
       'Agente que envía un reporte semanal de las horas imputadas por cada colaborador, con semáforo de cumplimiento (oportuno / no oportuno) y alertas automáticas.',
 
+    // Blog
+    blog_title:
+      'Datos e Inteligencia Artificial: <span class="text-gradient">de la información a la transformación</span>',
+    blog_subtitle:
+      'Explorando cómo las organizaciones pueden integrar Inteligencia Artificial de manera estratégica, comenzando por el entendimiento del negocio, sus procesos actuales y las oportunidades de mejora que permitan construir soluciones de valor.',
+    blog_posts_one: 'publicación',
+    blog_posts_many: 'publicaciones',
+    blog_series_one: 'serie',
+    blog_series_many: 'series',
+    blog_all: 'Todas las publicaciones',
+    blog_none: 'Aún no hay publicaciones.',
+    blog_part: 'serie · parte',
+    blog_draft: 'borrador',
+    blog_read: 'Leer artículo',
+    blog_back: 'Volver al blog',
+    blog_cta: '¿Te interesa conversar sobre datos, automatización o IA aplicada?',
+    blog_cta_btn: 'Escríbeme',
+
     // Contact
     contact_eyebrow: 'Contacto',
     contact_title: 'Hablemos',
@@ -86,13 +105,14 @@ export const dict: Record<Lang, Record<string, string>> = {
     nav_skills: 'Skills',
     nav_impact: 'Impact',
     nav_projects: 'Projects',
+    nav_blog: 'Blog',
     nav_contact: 'Contact',
     aria_menu: 'Open menu',
     aria_lang: 'Change language',
 
     // Hero
     hero_badge: 'Open to new opportunities',
-    hero_role: 'Data Analyst · <span class="text-gradient">Process Automation</span> · Operations',
+    hero_role: 'Data Analytics · <span class="text-gradient">AI Solutions</span> · Process Automation',
     hero_tagline:
       'I turn operational data into strategic decisions through automation, analysis and process optimization.',
     hero_cta_projects: 'View Projects',
@@ -136,6 +156,24 @@ export const dict: Record<Lang, Record<string, string>> = {
     proj_2_title: 'Hours Reporting Agent',
     proj_2_desc:
       'An agent that sends a weekly report of the hours logged by each team member, with a compliance traffic light (on time / late) and automatic alerts.',
+
+    // Blog
+    blog_title:
+      'Data & Artificial Intelligence: <span class="text-gradient">from information to transformation</span>',
+    blog_subtitle:
+      'Exploring how organizations can integrate Artificial Intelligence strategically, starting from a real understanding of the business, its current processes and the improvement opportunities that make it possible to build solutions with genuine value.',
+    blog_posts_one: 'post',
+    blog_posts_many: 'posts',
+    blog_series_one: 'series',
+    blog_series_many: 'series',
+    blog_all: 'All posts',
+    blog_none: 'No posts yet.',
+    blog_part: 'series · part',
+    blog_draft: 'draft',
+    blog_read: 'Read article',
+    blog_back: 'Back to blog',
+    blog_cta: 'Interested in talking about data, automation or applied AI?',
+    blog_cta_btn: 'Get in touch',
 
     // Contact
     contact_eyebrow: 'Contact',

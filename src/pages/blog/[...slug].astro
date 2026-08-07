@@ -1,0 +1,177 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import Nav from '../../components/Nav.astro';
+import Footer from '../../components/Footer.astro';
+import Icon from '../../components/Icon.astro';
+import Reveal from '../../components/Reveal.tsx';
+import PostArt from '../../components/PostArt.astro';
+import { getPublishedPosts, postUrl, url } from '../../lib/blog';
+import { site } from '../../data/site';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('blog', ({ data }) => import.meta.env.DEV || !data.draft);
+  return posts.map((post) => ({ params: { slug: post.slug }, props: { post } }));
+}
+
+const { post } = Astro.props;
+const { Content } = await post.render();
+const { title, excerpt, tags, series, art, cover, coverAlt, draft } = post.data;
+
+// Navegación dentro de la serie (o, si no hay serie, entre todas las publicaciones).
+const todos = await getPublishedPosts();
+const hermanos = series
+  ? todos
+      .filter((p) => p.data.series === series)
+      .sort((a, b) => (a.data.seriesOrder ?? 0) - (b.data.seriesOrder ?? 0))
+  : todos;
+const idx = hermanos.findIndex((p) => p.slug === post.slug);
+const anterior = idx > 0 ? hermanos[idx - 1] : null;
+const siguiente = idx >= 0 && idx < hermanos.length - 1 ? hermanos[idx + 1] : null;
+---
+<Base title={`${title} — ${site.name}`} description={excerpt}>
+  <!-- Barra de progreso de lectura -->
+  <div
+    id="read-progress"
+    class="fixed left-0 top-0 z-[60] h-[2px] w-0 origin-left"
+    style="background-image: linear-gradient(90deg, rgb(var(--accent)), rgb(var(--accent-2)));"
+    aria-hidden="true"
+  ></div>
+
+  <Nav />
+
+  <main>
+    <article>
+      <!-- Cabecera del artículo -->
+      <header class="relative overflow-hidden border-b border-border pt-12 pb-12 sm:pt-16 sm:pb-14">
+        <div class="container-page relative max-w-3xl">
+          <a
+            href={url('blog')}
+            class="group inline-flex items-center gap-2 text-sm link-muted"
+          >
+            <Icon name="arrow-right" size={16} class="rotate-180 transition-transform group-hover:-translate-x-1" />
+            <span data-i18n="blog_back">Volver al blog</span>
+          </a>
+
+          <h1 class="mt-9 text-3xl font-semibold leading-tight tracking-tight text-ink sm:text-[2.6rem]">
+            {title}
+          </h1>
+
+          <p class="mt-5 text-base leading-relaxed text-muted sm:text-lg">{excerpt}</p>
+
+          {(tags.length > 0 || draft) && (
+            <div class="mt-7 flex flex-wrap items-center gap-x-4 gap-y-2 border-t border-border pt-5">
+              {draft && (
+                <span class="mono-meta rounded border border-accent/40 px-1.5 py-0.5 text-accent-2">
+                  borrador
+                </span>
+              )}
+              {tags.map((tag) => <span class="mono-meta">#{tag}</span>)}
+            </div>
+          )}
+        </div>
+      </header>
+
+      <!-- Ilustración de portada -->
+      {(cover || art) && (
+        <div class="container-page max-w-3xl">
+          <div class="mt-12">
+            {cover ? (
+              <img
+                src={url(cover)}
+                alt={coverAlt ?? title}
+                class="w-full rounded-2xl border border-border object-cover"
+                loading="eager"
+              />
+            ) : (
+              <PostArt art={art!} />
+            )}
+          </div>
+        </div>
+      )}
+
+      <!-- Contenido -->
+      <div class="container-page max-w-3xl py-14 sm:py-16">
+        <div class="prose-tech">
+          <Content />
+        </div>
+      </div>
+    </article>
+
+    <!-- Navegación entre artículos -->
+    {(anterior || siguiente) && (
+      <nav class="border-t border-border py-12">
+        <div class="container-page max-w-3xl">
+          <Reveal client:visible>
+            <span class="mono-meta">
+              {series ? 'seguir la serie' : 'seguir leyendo'}
+            </span>
+          </Reveal>
+
+          <div class="mt-6 grid gap-4 sm:grid-cols-2">
+            {anterior ? (
+              <a
+                href={postUrl(anterior.slug)}
+                class="card-surface group flex flex-col p-6 hover:-translate-y-1 hover:border-accent/60 hover:shadow-glow-soft"
+              >
+                <span class="mono-meta flex items-center gap-2">
+                  <Icon name="arrow-right" size={13} class="rotate-180" /> anterior
+                </span>
+                <span class="mt-3 text-sm font-medium leading-snug text-ink transition-colors group-hover:text-accent-2">
+                  {anterior.data.title}
+                </span>
+              </a>
+            ) : (
+              <span class="hidden sm:block"></span>
+            )}
+
+            {siguiente && (
+              <a
+                href={postUrl(siguiente.slug)}
+                class="card-surface group flex flex-col p-6 text-right hover:-translate-y-1 hover:border-accent/60 hover:shadow-glow-soft sm:col-start-2"
+              >
+                <span class="mono-meta flex items-center justify-end gap-2">
+                  siguiente <Icon name="arrow-right" size={13} />
+                </span>
+                <span class="mt-3 text-sm font-medium leading-snug text-ink transition-colors group-hover:text-accent-2">
+                  {siguiente.data.title}
+                </span>
+              </a>
+            )}
+          </div>
+        </div>
+      </nav>
+    )}
+
+    <!-- CTA -->
+    <section class="border-t border-border py-14">
+      <div class="container-page max-w-3xl text-center">
+        <p class="text-sm text-muted" data-i18n="blog_cta">
+          ¿Te interesa conversar sobre datos, automatización o IA aplicada?
+        </p>
+        <a href={`${url('')}#contact`} class="btn-primary mt-5">
+          <Icon name="mail" size={16} />
+          <span data-i18n="blog_cta_btn">Escríbeme</span>
+        </a>
+      </div>
+    </section>
+  </main>
+
+  <Footer />
+</Base>
+
+<script is:inline>
+  // Barra de progreso de lectura
+  (function () {
+    const bar = document.getElementById('read-progress');
+    if (!bar) return;
+    const onScroll = () => {
+      const h = document.documentElement.scrollHeight - window.innerHeight;
+      const p = h > 0 ? Math.min(window.scrollY / h, 1) : 0;
+      bar.style.width = `${p * 100}%`;
+    };
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll);
+  })();
+</script>

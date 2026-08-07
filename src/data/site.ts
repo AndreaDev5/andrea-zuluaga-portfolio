@@ -1,7 +1,7 @@
 // Configuración central del sitio. Edita aquí tus datos de contacto y enlaces.
 export const site = {
   name: 'Andrea Zuluaga',
-  role: 'Data Analyst | Process Automation | FinOps',
+  role: 'Data Analytics | AI Solutions | Process Automation',
   tagline:
     'Transformo datos operativos en decisiones estratégicas mediante automatización, análisis y optimización de procesos.',
   location: 'Colombia',
@@ -20,5 +20,7 @@ export const nav = [
   { label: 'Skills', href: '#skills', i18n: 'nav_skills' },
   { label: 'Impacto', href: '#impact', i18n: 'nav_impact' },
   { label: 'Proyectos', href: '#projects', i18n: 'nav_projects' },
+  // Página propia (no es un ancla del home)
+  { label: 'Blog', href: 'blog/', i18n: 'nav_blog' },
   { label: 'Contacto', href: '#contact', i18n: 'nav_contact' },
 ] as const;
