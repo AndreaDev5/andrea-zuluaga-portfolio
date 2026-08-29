@@ -21,7 +21,7 @@ export const dict: Record<Lang, Record<string, string>> = {
     hero_badge: 'Disponible para nuevos retos',
     hero_role: 'Data Analytics · <span class="text-gradient">AI Solutions</span> · Process Automation',
     hero_tagline:
-      'Transformo datos operativos en decisiones estratégicas mediante automatización, análisis y optimización de procesos.',
+      'Transformo datos operativos en decisiones estratégicas mediante análisis, optimización de procesos y automatización.',
     hero_cta_projects: 'Ver Proyectos',
     hero_cta_contact: 'Contacto',
 
