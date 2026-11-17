@@ -112,7 +112,7 @@ export const dict: Record<Lang, Record<string, string>> = {
 
     // Hero
     hero_badge: 'Open to new opportunities',
-    hero_role: 'Data Analytics · <span class="text-gradient">AI Solutions</span> · Process Automation',
+    hero_role: 'Bussines Analyst · <span class="text-gradient">AI Solutions</span> · Process Automation',
     hero_tagline:
       'I turn operational data into strategic decisions through automation, analysis and process optimization.',
     hero_cta_projects: 'View Projects',
