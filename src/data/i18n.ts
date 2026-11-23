@@ -34,14 +34,16 @@ export const dict: Record<Lang, Record<string, string>> = {
 about_eyebrow: 'Sobre mí',
 about_title: 'Hecho es mejor que <span class="text-gradient">perfecto</span>',
 
+
 about_p1:
-  '<span class="font-medium text-ink">Tecnóloga en Análisis y Desarrollo de Software</span>, con experiencia en el análisis de procesos, la identificación de necesidades y oportunidades de mejora en las organizaciones, y el desarrollo de soluciones tecnológicas orientadas a optimizar procesos y mejorar la eficiencia operativa.',
+  '<span class="font-medium text-ink">Tecnóloga en Análisis y Desarrollo de Software</span>, con experiencia en análisis de procesos, identificación de oportunidades de mejora y desarrollo de soluciones tecnológicas orientadas a optimizar la eficiencia operativa.',
 
 about_p2:
-  'A lo largo de mi trayectoria he participado en proyectos que integran análisis de información, seguimiento de indicadores, automatización y desarrollo de soluciones. Esto me ha permitido comprender cómo se conectan las necesidades de una organización con la tecnología y cómo transformarlas en oportunidades de mejora.',
+  'He participado en proyectos que integran análisis de información, seguimiento de indicadores y automatización, conectando las necesidades de las organizaciones con soluciones tecnológicas.',
 
 about_p3:
-  'Mi enfoque está en conectar el negocio, los procesos y la tecnología, traduciendo necesidades en soluciones que faciliten el trabajo de las organizaciones y aporten valor a la toma de decisiones.<br><br>Todo desde un <span class="font-medium text-ink">enfoque minimalista</span>: priorizo la claridad, la funcionalidad y el valor por encima de la complejidad innecesaria. Me encanta aprender constantemente y asumir nuevos retos como oportunidades para crecer.',
+  'Mi enfoque está en conectar el negocio, los procesos y la tecnología, transformando necesidades en soluciones que faciliten el trabajo y aporten valor a la toma de decisiones.<br><br>Todo desde un <span class="font-medium text-ink">enfoque minimalista</span>: priorizo la claridad, la funcionalidad y el valor por encima de la complejidad innecesaria. Me encanta aprender constantemente y asumir nuevos retos como oportunidades para crecer.',
+
 
 about_h1: 'Organización',
 about_h2: 'Comunicación efectiva',
