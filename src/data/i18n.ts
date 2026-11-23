@@ -30,22 +30,24 @@ export const dict: Record<Lang, Record<string, string>> = {
 
     // About
     
+
 about_eyebrow: 'Sobre mí',
 about_title: 'Hecho es mejor que <span class="text-gradient">perfecto</span>',
 
 about_p1:
-  '<span class="font-medium text-ink">Tecnóloga en Análisis y Desarrollo de Software</span>, con experiencia en el desarrollo de soluciones tecnológicas, análisis de procesos e información y automatización.',
+  '<span class="font-medium text-ink">Tecnóloga en Análisis y Desarrollo de Software</span>, con experiencia en el análisis de procesos, la identificación de necesidades y oportunidades de mejora en las organizaciones, y el desarrollo de soluciones tecnológicas orientadas a optimizar procesos y mejorar la eficiencia operativa.',
 
 about_p2:
-  'A lo largo de mi trayectoria, he desarrollado una visión integral de los proyectos tecnológicos, desde la comprensión de las necesidades hasta la implementación de soluciones. En este camino descubrí lo que realmente me apasiona: <span class="font-medium text-ink">transformar procesos</span>.',
+  'A lo largo de mi trayectoria he participado en proyectos que integran análisis de información, seguimiento de indicadores, automatización y desarrollo de soluciones. Esto me ha permitido comprender cómo se conectan las necesidades de una organización con la tecnología y cómo transformarlas en oportunidades de mejora.',
 
 about_p3:
-  'Hoy me enfoco en conectar el negocio, los datos y la tecnología. Me interesa comprender cómo funcionan las organizaciones, identificar oportunidades de mejora y convertirlas en soluciones más simples, eficientes y con impacto real.<br><br>Todo desde un <span class="font-medium text-ink">enfoque minimalista</span>: priorizo la claridad, la funcionalidad y el valor por encima de la complejidad innecesaria. Me encanta aprender constantemente y asumir nuevos retos como oportunidades para crecer.',
+  'Mi enfoque está en conectar el negocio, los procesos y la tecnología, traduciendo necesidades en soluciones que faciliten el trabajo de las organizaciones y aporten valor a la toma de decisiones.<br><br>Todo desde un <span class="font-medium text-ink">enfoque minimalista</span>: priorizo la claridad, la funcionalidad y el valor por encima de la complejidad innecesaria. Me encanta aprender constantemente y asumir nuevos retos como oportunidades para crecer.',
 
 about_h1: 'Organización',
 about_h2: 'Comunicación efectiva',
 about_h3: 'Trabajo en equipo',
 about_h4: 'Aprendizaje continuo',
+
 
 
     // Impact
