@@ -1,3 +1,4 @@
+
 ---
 import Reveal from './Reveal.tsx';
 import Icon from './Icon.astro';
@@ -9,53 +10,61 @@ const highlights = [
   { key: 'about_h4', label: 'Aprendizaje continuo' },
 ];
 ---
+
 <section id="about" class="border-t border-border py-20 sm:py-28">
   <div class="container-page grid gap-12 lg:grid-cols-12">
+
+    <!-- Presentación -->
     <div class="lg:col-span-5">
       <Reveal client:visible>
-        <span class="eyebrow mb-4" data-i18n="about_eyebrow">Sobre mí</span>
+        <span class="eyebrow mb-4" data-i18n="about_eyebrow">
+          Sobre mí
+        </span>
+
         <h2 class="section-title" data-i18n="about_title">
           Hecho es mejor que <span class="text-gradient">perfecto</span>
         </h2>
       </Reveal>
     </div>
 
-   
-<div class="lg:col-span-7">
-  <Reveal client:visible delay={0.1}>
-    <div class="space-y-5 text-base leading-relaxed text-muted sm:text-lg">
-      <p data-i18n="about_p1">
-        <span class="font-medium text-ink">Tecnóloga en Análisis y Desarrollo de Software</span>,
-        con experiencia en el desarrollo de soluciones tecnológicas,
-        análisis de procesos e información y automatización.
-      </p>
+    <!-- Descripción y habilidades -->
+    <div class="lg:col-span-7">
+      <Reveal client:visible delay={0.1}>
 
-      <p data-i18n="about_p2">
-        A lo largo de mi trayectoria, he desarrollado una visión integral
-        de los proyectos tecnológicos, desde la comprensión de las
-        necesidades hasta la implementación de soluciones. En este camino
-        descubrí lo que realmente me apasiona:
-        <span class="font-medium text-ink">transformar procesos</span>.
-      </p>
+        <div class="space-y-5 text-base leading-relaxed text-muted sm:text-lg">
 
-      <p data-i18n="about_p3">
-        Hoy me enfoco en conectar el negocio, los datos y la tecnología.
-        Me interesa comprender cómo funcionan las organizaciones,
-        identificar oportunidades de mejora y convertirlas en soluciones
-        más simples, eficientes y con impacto real.
-      </p>
+          <p data-i18n="about_p1">
+            <span class="font-medium text-ink">
+              Tecnóloga en Análisis y Desarrollo de Software
+            </span>,
+            con experiencia en el desarrollo de soluciones tecnológicas,
+            análisis de procesos e información y automatización.
+          </p>
 
-      <p data-i18n="about_p4">
-        Todo desde un <span class="font-medium text-ink">enfoque minimalista</span>:
-        priorizo la claridad, la funcionalidad y el valor por encima de la
-        complejidad innecesaria. Me encanta aprender constantemente y
-        asumir nuevos retos como oportunidades para crecer.
-      </p>
-    </div>
-  </Reveal>
-</div>
+          <p data-i18n="about_p2">
+            A lo largo de mi trayectoria, he desarrollado una visión integral
+            de los proyectos tecnológicos, desde la comprensión de las
+            necesidades hasta la implementación de soluciones. En este camino
+            descubrí lo que realmente me apasiona:
+            <span class="font-medium text-ink">transformar procesos</span>.
+          </p>
 
+          <p data-i18n="about_p3">
+            Hoy me enfoco en conectar el negocio, los datos y la tecnología.
+            Me interesa comprender cómo funcionan las organizaciones,
+            identificar oportunidades de mejora y convertirlas en soluciones
+            más simples, eficientes y con impacto real.
 
+            Todo desde un
+            <span class="font-medium text-ink">enfoque minimalista</span>:
+            priorizo la claridad, la funcionalidad y el valor por encima de la
+            complejidad innecesaria. Me encanta aprender constantemente y
+            asumir nuevos retos como oportunidades para crecer.
+          </p>
+
+        </div>
+
+        <!-- Habilidades personales -->
         <ul class="mt-8 grid gap-3 sm:grid-cols-2">
           {highlights.map((item) => (
             <li class="flex items-center gap-3 text-sm text-ink">
@@ -66,7 +75,10 @@ const highlights = [
             </li>
           ))}
         </ul>
+
       </Reveal>
     </div>
+
   </div>
 </section>
+
