@@ -29,18 +29,24 @@ export const dict: Record<Lang, Record<string, string>> = {
     marquee_title: 'Herramientas & tecnologías',
 
     // About
-    about_eyebrow: 'Sobre mí',
-    about_title: 'Hecho es mejor que <span class="text-gradient">perfecto</span>',
-    about_p1:
-      'Soy <span class="font-medium text-ink">Analista y Desarrolladora de Software</span>. Durante mi trayectoria aprendí cómo funciona el desarrollo de un proyecto de principio a fin, y con el tiempo descubrí que lo que realmente me apasiona es <span class="font-medium text-ink">transformar procesos</span>.',
-    about_p2:
-      'Hoy me enfoco en el <span class="font-medium text-ink">análisis de datos</span> y la <span class="font-medium text-ink">automatización de procesos</span>: encuentro lo que se puede mejorar y lo convierto en soluciones más simples, eficientes y con impacto real.',
-    about_p3:
-      'Todo con un <span class="font-medium text-ink">enfoque minimalista</span>: priorizo la claridad, la funcionalidad y el valor real por encima de la complejidad innecesaria. Y sobre todo, <span class="font-medium text-ink">me encanta aprender constantemente</span>: cada reto nuevo es una oportunidad para crecer.',
-    about_h1: 'Organización',
-    about_h2: 'Comunicación efectiva',
-    about_h3: 'Trabajo en equipo',
-    about_h4: 'Aprendizaje continuo',
+    
+about_eyebrow: 'Sobre mí',
+about_title: 'Hecho es mejor que <span class="text-gradient">perfecto</span>',
+
+about_p1:
+  '<span class="font-medium text-ink">Tecnóloga en Análisis y Desarrollo de Software</span>, con experiencia en el desarrollo de soluciones tecnológicas, análisis de procesos e información y automatización.',
+
+about_p2:
+  'A lo largo de mi trayectoria, he desarrollado una visión integral de los proyectos tecnológicos, desde la comprensión de las necesidades hasta la implementación de soluciones. En este camino descubrí lo que realmente me apasiona: <span class="font-medium text-ink">transformar procesos</span>.',
+
+about_p3:
+  'Hoy me enfoco en conectar el negocio, los datos y la tecnología. Me interesa comprender cómo funcionan las organizaciones, identificar oportunidades de mejora y convertirlas en soluciones más simples, eficientes y con impacto real.<br><br>Todo desde un <span class="font-medium text-ink">enfoque minimalista</span>: priorizo la claridad, la funcionalidad y el valor por encima de la complejidad innecesaria. Me encanta aprender constantemente y asumir nuevos retos como oportunidades para crecer.',
+
+about_h1: 'Organización',
+about_h2: 'Comunicación efectiva',
+about_h3: 'Trabajo en equipo',
+about_h4: 'Aprendizaje continuo',
+
 
     // Impact
     impact_title: 'Impacto',
